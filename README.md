@@ -2,3 +2,7 @@
 
 ## This is for anyone who want to fork/work on this for learning 
 
+---
+
+## Concepts to learn in this :
+
