@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notes App</title>
 
+  <!-- Global & Component Stylesheets (imported through main.css) -->
+  <link rel="stylesheet" href="./ui/main.css" />
+</head>
+<body>
+
+  <!-- Root Application Layout Shell -->
+  <div class="app-container" id="app">
+
+    <!-- 1. TOP BAR -->
+    <header class="topbar-dock" id="topbar">
+      <div class="topbar-brand">
+        <span class="topbar-logo-dot"></span>
+        <span class="topbar-title">Notes</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn" id="themeToggleBtn" title="Palette accent">Accent</button>
+        <button class="topbar-btn" id="syncStatusBtn" title="Storage status">Synced</button>
+      </div>
+    </header>
+
+    <!-- 2. MAIN WORKSPACE (Sidebar + Editor) -->
+    <div class="workspace-layout">
+      
+      <!-- SIDEBAR -->
+      <aside class="sidebar-dock" id="sidebar">
+        <div class="sidebar-header">
+          <span class="sidebar-brand">Workspace</span>
+          <button class="sidebar-action-btn" id="newNoteBtn">+ New</button>
+        </div>
+
+        <div class="sidebar-search-box">
+          <input 
+            type="text" 
+            class="sidebar-search-input" 
+            id="searchInput" 
+            placeholder="Search notes..." 
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Dynamic Note List (Populated via IndexedDB & sideBar/main.js) -->
+        <nav class="sidebar-list" id="notesList" aria-label="Note history">
+          <!-- Note cards will be rendered dynamically here -->
+        </nav>
+      </aside>
+
+      <!-- EDITOR WORKSPACE -->
+      <main class="editor-wrapper" id="editorArea">
+        <section class="editor-sheet">
+          
+          <!-- Floating Pill Toolbar -->
+          <div class="editor-toolbar" id="editorToolbar">
+            <button class="editor-tool-btn" data-command="bold" title="Bold">B</button>
+            <button class="editor-tool-btn" data-command="italic" title="Italic">I</button>
+            <button class="editor-tool-btn" data-command="underline" title="Underline">U</button>
+            <button class="editor-tool-btn" data-command="clear" title="Clear Formatting">✕</button>
+          </div>
+
+          <!-- Metadata Strip -->
+          <div class="editor-meta-strip">
+            <span class="editor-chip" id="noteDateChip">Just now</span>
+            <span class="editor-chip" id="noteWordCount">0 words</span>
+            <span class="editor-chip" id="noteCharCount">0 characters</span>
+          </div>
+
+          <!-- Note Title Field -->
+          <input 
+            type="text" 
+            class="editor-title" 
+            id="noteTitle" 
+            placeholder="Untitled Note..." 
+            autocomplete="off"
+          />
+
+          <!-- Note Writing Canvas -->
+          <textarea 
+            class="editor-body" 
+            id="noteBody" 
+            placeholder="Write with depth and focus..."
+            spellcheck="true"
+          ></textarea>
+
+        </section>
+      </main>
+
+    </div>
+
+    <!-- 3. BOTTOM BAR -->
+    <footer class="bottombar-dock" id="bottombar">
+      <div class="bottombar-section left">
+        <span class="bottombar-indicator"></span>
+        <span class="bottombar-text" id="statusMessage">IndexedDB Ready</span>
+      </div>
+      <div class="bottombar-section right">
+        <span class="bottombar-text" id="storageUsage">0 KB stored</span>
+      </div>
+    </footer>
+
+    <!-- 4. REUSABLE PROMPT MODAL (Controlled via prompt/main.js) -->
+    <div class="prompt-overlay" id="promptModal" aria-hidden="true">
+      <div class="prompt-card" role="dialog" aria-modal="true" aria-labelledby="promptTitle">
+        <div class="prompt-header">
+          <h3 class="prompt-title" id="promptTitle">Prompt Title</h3>
+          <p class="prompt-description" id="promptDesc">Prompt message or description goes here.</p>
+        </div>
+
+        <div class="prompt-input-group" id="promptInputGroup" style="display: none;">
+          <input 
+            type="text" 
+            class="prompt-input" 
+            id="promptField" 
+            placeholder="Type your response..." 
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="prompt-actions" id="promptActions">
+          <button class="prompt-btn prompt-btn-secondary" id="promptCancelBtn">Cancel</button>
+          <button class="prompt-btn prompt-btn-primary" id="promptConfirmBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Native Modular Scripts (ES Modules) -->
+  <script type="module">
+    import { Prompt } from './prompt/main.js';
+    import { Sidebar } from './sideBar/main.js';
+    import { Editor } from './Editor/main.js';
+    import { BottomBar } from './bottomBar/main.js';
+    import { TopBar } from './topBar/main.js';
+
+    // Application entry bootstrap will go here
+  </script>
+</body>
+</html>
