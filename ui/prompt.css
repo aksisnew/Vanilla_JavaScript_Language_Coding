@@ -1,0 +1,154 @@
+/* ==========================================================
+   PROMPT MODAL SYSTEM (Depth-focused, curved, rem only)
+   ========================================================== */
+
+/* Overlay backdrop */
+.prompt-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  background-color: hsla(265, 35%, 26%, 0.45); /* Faded purple tint instead of black */
+  backdrop-filter: blur(0.375rem);
+  -webkit-backdrop-filter: blur(0.375rem);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 1000;
+}
+
+/* Active state for overlay */
+.prompt-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Floating modal dialog card */
+.prompt-card {
+  width: 100%;
+  max-width: 26rem;
+  background-color: var(--bg-surface);
+  border: 0.0625rem solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-depth-lg);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transform: scale(0.92) translateY(0.5rem);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.prompt-overlay.is-visible .prompt-card {
+  transform: scale(1) translateY(0);
+}
+
+/* Header & Typography */
+.prompt-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.prompt-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.prompt-description {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Sunken input field for text prompts */
+.prompt-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.prompt-input {
+  width: 100%;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  background-color: var(--color-purple-soft);
+  border: 0.0625rem solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-sm);
+  box-shadow: var(--shadow-sunken);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.prompt-input:focus {
+  border-color: var(--color-blue-muted);
+  box-shadow: var(--shadow-sunken), 0 0 0 0.125rem var(--color-blue-soft);
+}
+
+.prompt-input::placeholder {
+  color: var(--color-purple-muted);
+}
+
+/* Action button area */
+.prompt-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+/* Base button with depth */
+.prompt-btn {
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-md);
+  border: 0.0625rem solid var(--border-subtle);
+  box-shadow: var(--shadow-depth-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.prompt-btn:active {
+  transform: translateY(0.0625rem);
+  box-shadow: var(--shadow-sunken);
+}
+
+/* Button variants using strictly our faded palette */
+/* Secondary / Cancel */
+.prompt-btn-secondary {
+  background-color: var(--color-purple-soft);
+  color: var(--text-muted);
+}
+
+.prompt-btn-secondary:hover {
+  background-color: var(--color-pink-soft);
+}
+
+/* Primary / Confirm (Faded Blue tone) */
+.prompt-btn-primary {
+  background-color: var(--color-blue-muted);
+  color: var(--color-blue-deep);
+  border-color: var(--color-blue-deep);
+}
+
+.prompt-btn-primary:hover {
+  background-color: var(--color-blue-soft);
+}
+
+/* Destructive / Danger (Faded Red tone) */
+.prompt-btn-danger {
+  background-color: var(--color-red-muted);
+  color: var(--color-red-deep);
+  border-color: var(--color-red-deep);
+}
+
+.prompt-btn-danger:hover {
+  background-color: var(--color-red-soft);
+}
