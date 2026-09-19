@@ -1,4 +1,11 @@
+/* Core Root Variables */
 @import url('./root.css');
+
+/* Modular Component Styles */
+@import url('./prompt.css');
+@import url('./editor.css');
+@import url('./sidebar.css');
+@import url('./bottombar.css');
 
 /* Global base resets using rem and root tokens */
 *,
