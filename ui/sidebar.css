@@ -1,0 +1,226 @@
+/* ==========================================================
+   SIDEBAR (Floating, Cursor-Reactive, Inset/Outset Depth)
+   ========================================================== */
+
+/* Outer floating container */
+.sidebar-dock {
+  position: relative;
+  width: 20rem;
+  height: calc(100vh - 2rem);
+  margin: var(--space-md);
+  background-color: var(--bg-surface);
+  border: 0.0625rem solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-depth-md);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-lg);
+  gap: var(--space-md);
+  overflow: hidden;
+  
+  /* Bouncy physics for resize / toggle */
+  transition: 
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+
+/* Cursor-reactive ambient spotlight (Uses CSS vars updated via JS) */
+.sidebar-dock::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    14rem circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
+    hsla(335, 55%, 92%, 0.45),
+    transparent 70%
+  );
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Sidebar Header Area */
+.sidebar-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.sidebar-brand {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.015rem;
+}
+
+/* New Note Button (Curved, tactile bounce) */
+.sidebar-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--color-blue-soft);
+  color: var(--color-blue-deep);
+  border: 0.0625rem solid var(--color-blue-muted);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-depth-sm);
+  transition: 
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.sidebar-action-btn:hover {
+  transform: translateY(-0.125rem) scale(1.03);
+  background-color: var(--color-blue-muted);
+}
+
+.sidebar-action-btn:active {
+  transform: translateY(0.0625rem) scale(0.97);
+  box-shadow: var(--shadow-sunken);
+}
+
+/* Sunken Search Field */
+.sidebar-search-box {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.sidebar-search-input {
+  width: 100%;
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--color-purple-soft);
+  border: 0.0625rem solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sunken);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sidebar-search-input:focus {
+  border-color: var(--color-pink-muted);
+  box-shadow: 
+    var(--shadow-sunken),
+    0 0 0 0.125rem var(--color-pink-soft);
+}
+
+.sidebar-search-input::placeholder {
+  color: var(--color-purple-muted);
+}
+
+/* Scrollable Note List Container */
+.sidebar-list {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  overflow-y: auto;
+  padding-right: var(--space-2xs);
+}
+
+/* Note Item Card (Follows cursor, reactive bounce) */
+.sidebar-note-card {
+  position: relative;
+  padding: var(--space-sm);
+  background-color: var(--color-purple-soft);
+  border: 0.0625rem solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-depth-sm);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  transition: 
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Bouncy dynamic lift on hover */
+.sidebar-note-card:hover {
+  transform: translateX(0.25rem) scale(1.02);
+  background-color: var(--color-pink-soft);
+  border-color: var(--color-pink-muted);
+  box-shadow: var(--shadow-depth-md);
+}
+
+/* Active Note Card (Selected) */
+.sidebar-note-card.is-active {
+  background-color: var(--color-blue-soft);
+  border-color: var(--color-blue-deep);
+  box-shadow: var(--shadow-sunken);
+  transform: translateX(0.125rem);
+}
+
+.sidebar-note-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-note-preview {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sidebar-note-date {
+  font-size: 0.6875rem;
+  color: var(--color-purple-muted);
+  align-self: flex-end;
+}
+
+/* Delete / Quick Action chip inside card (Faded Red) */
+.sidebar-note-delete {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  padding: var(--space-2xs);
+  background-color: var(--color-red-soft);
+  color: var(--color-red-deep);
+  border: 0.0625rem solid var(--color-red-muted);
+  border-radius: var(--radius-full);
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-note-card:hover .sidebar-note-delete {
+  opacity: 1;
+}
+
+.sidebar-note-delete:hover {
+  transform: scale(1.15);
+  background-color: var(--color-red-muted);
+}
+
+/* Custom Scrollbar for Sidebar List */
+.sidebar-list::-webkit-scrollbar {
+  width: 0.375rem;
+}
+
+.sidebar-list::-webkit-scrollbar-thumb {
+  background-color: var(--color-purple-muted);
+  border-radius: var(--radius-full);
+}
