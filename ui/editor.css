@@ -1,0 +1,196 @@
+/* ==========================================================
+   EDITOR STYLES (Floating, Bouncy, Curved, Depth-driven)
+   ========================================================== */
+
+/* Main outer wrapper for the writing workspace */
+.editor-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-xl) var(--space-md);
+  overflow-y: auto;
+}
+
+/* Floating editor canvas card */
+.editor-sheet {
+  width: 100%;
+  max-width: 52rem;
+  min-height: 38rem;
+  background-color: var(--bg-surface);
+  border: 0.0625rem solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-depth-md);
+  padding: var(--space-2xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  
+  /* Bouncy floating transition */
+  transition: 
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.4s ease;
+}
+
+/* Hover elevation: subtle buoyant lift */
+.editor-sheet:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: var(--shadow-depth-lg);
+}
+
+/* Floating pill toolbar inside editor */
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--color-purple-soft);
+  border: 0.0625rem solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-depth-sm);
+  width: fit-content;
+  align-self: flex-start;
+}
+
+/* Bouncy tool buttons */
+.editor-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xs) var(--space-xs);
+  min-width: 2rem;
+  height: 2rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  background-color: transparent;
+  border: 0.0625rem solid transparent;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: 
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Bouncy hover scale */
+.editor-tool-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--color-pink-soft);
+  transform: scale(1.15) translateY(-0.0625rem);
+  box-shadow: var(--shadow-depth-sm);
+}
+
+/* Tactile press */
+.editor-tool-btn:active {
+  transform: scale(0.92) translateY(0.0625rem);
+  box-shadow: var(--shadow-sunken);
+}
+
+.editor-tool-btn.is-active {
+  background-color: var(--color-blue-soft);
+  color: var(--color-blue-deep);
+  border-color: var(--color-blue-muted);
+  box-shadow: var(--shadow-sunken);
+}
+
+/* Note Title Field */
+.editor-title {
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: var(--space-xs) 0;
+  border-bottom: 0.0625rem solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.editor-title::placeholder {
+  color: var(--color-purple-muted);
+  opacity: 0.7;
+}
+
+.editor-title:focus {
+  border-bottom: 0.0625rem solid var(--color-blue-muted);
+}
+
+/* Metadata pill container (Date, Word Count, Tags) */
+.editor-meta-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.editor-chip {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  background-color: var(--color-purple-soft);
+  color: var(--text-muted);
+  border: 0.0625rem solid var(--border-subtle);
+  box-shadow: var(--shadow-depth-sm);
+}
+
+/* Main Note Body Area (Contenteditable or Textarea) */
+.editor-body {
+  width: 100%;
+  flex: 1;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text-primary);
+  background-color: var(--color-purple-soft);
+  border: 0.0625rem solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sunken);
+  outline: none;
+  resize: none;
+  min-height: 20rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.editor-body:focus {
+  border-color: var(--color-purple-muted);
+  box-shadow: 
+    var(--shadow-sunken),
+    0 0 0 0.125rem var(--color-pink-soft);
+}
+
+.editor-body::placeholder {
+  color: var(--color-purple-muted);
+}
+
+/* Custom Text Selection strictly inside our palette */
+.editor-body::selection,
+.editor-title::selection {
+  background-color: var(--color-pink-muted);
+  color: var(--color-purple-deep);
+}
+
+/* Custom Scrollbar for the editor (rem only, faded purple palette) */
+.editor-wrapper::-webkit-scrollbar,
+.editor-body::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.editor-wrapper::-webkit-scrollbar-track,
+.editor-body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.editor-wrapper::-webkit-scrollbar-thumb,
+.editor-body::-webkit-scrollbar-thumb {
+  background-color: var(--color-purple-muted);
+  border-radius: var(--radius-full);
+}
+
+.editor-wrapper::-webkit-scrollbar-thumb:hover,
+.editor-body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-purple-deep);
+}
